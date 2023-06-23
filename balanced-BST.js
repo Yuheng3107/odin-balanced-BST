@@ -21,7 +21,7 @@ function Tree(arr) {
     // sort and remove duplicates
     arr = [...new Set(arr)];
     arr.sort((a, b) => a - b);
-    return createTree(arr, 0, arr.length);
+    return createTree(arr, 0, arr.length - 1);
   }
 
   function createTree(arr, start, end) {
@@ -34,10 +34,21 @@ function Tree(arr) {
     return root;
   }
 
-  return Object.assign({}, { buildTree, root, prettyPrint });
+  function insert(val, node = root) {
+    if (node === null) return;
+    if (val < node.data) {
+      if (node.left === null) node.left = Node(val);
+      else insert(val, node.left);
+    } else if (val > node.data) {
+      if (node.right === null) node.right = Node(val);
+      else insert(val, node.right);
+    }
+  }
+  return Object.assign({}, { buildTree, root, prettyPrint, insert });
 }
-let node = Node(4);
 
 let tree = Tree([9, 6, 4, 2, 1]);
-console.log(tree.root);
+tree.insert(3);
+tree.insert(11);
 tree.prettyPrint(tree.root);
+console.log(tree.root);
