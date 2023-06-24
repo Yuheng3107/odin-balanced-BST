@@ -75,9 +75,8 @@ function Tree(arr) {
 
   function levelOrder(func = null) {
     let queue = [root];
-    if (func === null) {
-      let ans = [];
-    }
+    let ans = [];
+
     while (queue.length !== 0) {
       let layer = queue.length;
       while (layer--) {
@@ -143,7 +142,7 @@ function Tree(arr) {
 
   function rebalance() {
     arr = levelOrder();
-    buildTree(arr);
+    return Tree(arr);
   }
   return Object.assign(
     {},
@@ -159,14 +158,35 @@ function Tree(arr) {
       height,
       depth,
       isBalanced,
+      Delete,
+      rebalance,
     }
   );
 }
-
+function generateRandomArrayOfNumbers(size) {
+  let arr = [];
+  for (let i = 0; i < size; i++) {
+    // generates integers from 0-99
+    let num = Math.floor(Math.random() * 100);
+    arr.push(num);
+  }
+  return arr;
+}
 const logData = (node) => console.log(node.data);
 
-let tree = Tree([9, 6, 4, 2, 1]);
-tree.insert(3);
-tree.insert(11);
-tree.prettyPrint(tree.root);
-console.log(tree.depth(tree.root));
+let tree = Tree(generateRandomArrayOfNumbers(40));
+console.log(tree.isBalanced());
+tree.levelOrder(console.log);
+tree.preorder(console.log);
+tree.inorder(console.log);
+tree.postorder(console.log);
+for (let i = 101; i < 110; i++) {
+  tree.insert(i);
+}
+console.log(tree.isBalanced());
+tree = tree.rebalance();
+console.log(tree.isBalanced());
+tree.levelOrder(console.log);
+tree.preorder(console.log);
+tree.inorder(console.log);
+tree.postorder(console.log);
